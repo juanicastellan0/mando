@@ -1,68 +1,59 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import CharactersList from "./components/CharactersList";
 import './App.css';
 import {
     BrowserRouter as Router,
-    Link,
     Switch,
     Route
 } from "react-router-dom"
+import {Link, Breadcrumbs, Container, CssBaseline, Typography} from "@material-ui/core";
+import {MuiThemeProvider} from "@material-ui/core";
+import theme from "./themeConfig";
 
 function App() {
-    const [count, setCount] = useState(0)
-    useEffect(() => {
-        document.title = `You clicked ${count} times`;
-    })
-    const increase = () => {
-        setCount(count + 1)
-    }
-
     return (
         <Router>
-            <div>
-                <p>You clicked {count} times</p>
-                <button onClick={increase}>Click me</button>
-            </div>
-            <div>
-                <nav>
-                    <ul>
-                        <li>
-                            <Link to="/">Home</Link>
-                        </li>
-                        <li>
-                            <Link to="/about">About</Link>
-                        </li>
-                        <li>
-                            <Link to="/characters">Characters</Link>
-                        </li>
-                    </ul>
-                </nav>
-                <Switch>
-                    <Route path="/about">
-                        <About/>
-                    </Route>
-                    <Route path="/characters">
-                        <Characters/>
-                    </Route>
-                    <Route path="/">
-                        <Home/>
-                    </Route>
-                </Switch>
-            </div>
+            <React.Fragment>
+                <MuiThemeProvider theme={theme}>
+                    <CssBaseline/>
+                    <Container maxWidth="sm">
+                        <Typography component="div"/>
+                        <div>
+                            <Breadcrumbs>
+                                <Link color="primary" href="/">Home</Link>
+                                <Link color="primary" href="/characters">Characters</Link>
+                            </Breadcrumbs>
+                            <Switch>
+                                <Route path="/characters">
+                                    <Characters/>
+                                </Route>
+                                <Route path="/">
+                                    <Home/>
+                                </Route>
+                            </Switch>
+                        </div>
+                    </Container>
+                </MuiThemeProvider>
+            </React.Fragment>
         </Router>
     );
 }
 
 function Home() {
-    return <h2>Home</h2>;
-}
-
-function About() {
-    return <h2>About</h2>;
+    return (
+        <div>
+            <h2>Egg Education</h2>
+            <img
+                src="https://media.giphy.com/media/SiUV5nib8Rm4U/giphy.gif"
+                alt="theForce"
+                height="600"
+            />
+        </div>
+    );
 }
 
 function Characters() {
-    return <CharactersList>Hi</CharactersList>;
+    return <CharactersList/>;
 }
 
 export default App;
