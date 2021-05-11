@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import CharactersList from "./components/CharactersList";
 import './App.css';
 import {
     BrowserRouter as Router,
@@ -6,7 +7,6 @@ import {
     Switch,
     Route
 } from "react-router-dom"
-import axios from "axios";
 
 function App() {
     const [count, setCount] = useState(0)
@@ -62,18 +62,7 @@ function About() {
 }
 
 function Characters() {
-    let people;
-    const peopleUrl = 'https://swapi.dev/api/people/'
-
-    const getPeople = () => {
-        axios.get(peopleUrl).then(response => {
-            people = response;
-        });
-    }
-
-    return (
-        <h2>Characters</h2>
-    );
+    return <CharactersList>Hi</CharactersList>;
 }
 
 export default App;
