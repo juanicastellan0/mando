@@ -1,11 +1,17 @@
-El Objetivo es crear un proyecto de cero con 'npx create-react-app my-app --template typescript', listar los personajes de Star Wars desde esta api 'https://swapi.dev/api/people/', al darle click al personaje debes mostrar el detalle del personaje.
+Proyecto de Star Wars
+ 'npx create-react-app my-app --template typescript', 
+ listar los personajes de Star Wars desde esta api 'https://swapi.dev/api/people/', 
+ al darle click al personaje debes mostrar el detalle del personaje.
 
 Tecnologías
-1 / React router dom
-2 / React hooks
-3 / Typescript sin 'any'
-4 / Para la llamada a la API usar axios
-5 / Styles como más te guste
+
+1 - React router dom
+
+2 - React hooks
+
+3 - Typescript sin 'any'
+
+4 - Para la llamada a la API usar axios
 
 Cuando lo tengas listo te pedimos que subas la solución a un repo público propio de github y que nos compartas el enlace.
 
