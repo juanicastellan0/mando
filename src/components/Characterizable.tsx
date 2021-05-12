@@ -14,14 +14,14 @@ export interface Characterizable {
 }
 
 interface Characterer {
-    character: Characterizable;
+    character: Characterizable | undefined;
 }
 
 const Character = (props: Characterer) => {
-    return  <Link to={ "/characters/" + props.character.nick }>
+    return  <Link to={ "/characters/" + props.character?.nick }>
                 <img className="pic"
-                     src={process.env.PUBLIC_URL + "/pics/" + props.character.nick + ".png"}
-                     alt={props.character.name}
+                     src={process.env.PUBLIC_URL + "/pics/" + props.character?.nick + ".png"}
+                     alt={props.character?.name}
                      width="200" height="180"/>
             </Link>
 }

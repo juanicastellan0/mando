@@ -12,3 +12,7 @@ a {
 .links {
     font-size: 23px;
 }
+
+.link {
+    margin: 15px;
+}

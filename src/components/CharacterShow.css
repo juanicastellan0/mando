@@ -1,0 +1,14 @@
+.descriptionContainer {
+    padding: 20px;
+}
+
+.descriptionSpan {
+    border-radius: 8px;
+    background-color: #4b4b4b;
+    padding: 10px 6px 5px;
+    margin: 5px;
+}
+
+.description {
+    padding: 12px;
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import CharacterShow from "./components/CharacterShow";
 import CharactersList from "./components/CharactersList"
 import './App.css';
@@ -8,23 +8,28 @@ import {
     Switch,
     Route
 } from "react-router-dom"
+import {Characterizable} from "./components/Characterizable";
 
 function App() {
+    const [characters, setCharacters] = useState(Array<Characterizable>());
+
     return (
         <Router>
             <React.Fragment>
                         <div>
                             <div className='links'>
-                                <Link to="/">Home</Link>
-                                <br/>
-                                <Link to="/characters">Characters</Link>
+                                <div className="link"><Link to="/">Home</Link></div>
+                                <div className="link"><Link to="/characters">Characters</Link></div>
                             </div>
                             <Switch>
-                                <Route path="/characters">
-                                    <CharactersList/>
+                                <Route path="/characters" exact={true}>
+                                    <CharactersList
+                                        onChange={(characters: Array<any>) => setCharacters(characters)}
+                                        characters={characters}/>
                                 </Route>
                                 <Route path="/characters/:characterId">
-                                    <CharacterShow/>
+                                    <CharacterShow
+                                        characters={characters}/>
                                 </Route>
                                 <Route path="/">
                                     <Home/>
