@@ -1,78 +1,60 @@
-import React, {Component} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
-import {Card, CardHeader, createStyles, makeStyles, Theme} from "@material-ui/core";
-
-class Character {
-    name: string = '';
-    birth_year: string = '';
-    eye_color: string = '';
-    gender: string = '';
-    hair_color: string = '';
-    height: string = '';
-    mass: string = '';
-    skin_color: string = '';
-}
+import "./CharactersList.css";
+import Character, {Characterizable} from "./Characterizable";
 
 interface Pic {
     name: string;
-    fileName: string;
+    nick: string;
 }
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
-    root: {
-        maxWidth: 300,
-    }
-}))
+const pics: Array<Pic> = [
+    {name: "Luke Skywalker", nick: "luke"},
+    {name: "C-3PO", nick: "c3po"},
+    {name: "R2-D2", nick: "r2d2"},
+    {name: "Darth Vader", nick: "darth"},
+    {name: "Leia Organa", nick: "leia"},
+    {name: "Owen Lars", nick: "owen"},
+    {name: "Beru Whitesun lars", nick: "beru"},
+    {name: "R5-D4", nick: "r5d4"},
+    {name: "Biggs Darklighter", nick: "biggs"},
+    {name: "Obi-Wan Kenobi", nick: "obi"}
+];
 
-export default class CharactersList extends Component {
-    pics: Array<Pic> = [
-        {name: "Luke Skywalker", fileName: "luke"},
-        {name: "C-3PO", fileName: "c3po"},
-        {name: "R2-D2", fileName: "r2d2"},
-        {name: "Darth Vader", fileName: "darth"},
-        {name: "Leia Organa", fileName: "leia"},
-        {name: "Owen Lars", fileName: "owen"},
-        {name: "Beru Whitesun lars", fileName: "beru"},
-        {name: "R5-D4", fileName: "r5d4"},
-        {name: "Biggs Darklighter", fileName: "biggs"},
-        {name: "Obi-Wan Kenobi", fileName: "obi"}
-    ];
-    state = {characters: Array<Character>()}
-    charactersUrl = 'https://swapi.dev/api/people/';
+export default function CharactersList() {
+    const [characters, setCharacters] = useState(Array<Characterizable>())
+    const charactersUrl = 'https://swapi.dev/api/people/';
 
-    setCharacters() {
-        axios.get(this.charactersUrl).then(response => {
-            this.setState({characters: response.data.results})
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await axios.get(charactersUrl);
+            response.data.results.forEach((result: Characterizable) => {
+                const pic = pics.find(pic => pic.name === result.name);
+                if (!pic) return;
+                result.nick = pic.nick;
+            })
+            setCharacters(response.data.results);
+        }
+
+        fetchData().then(() => {
+            // console.log('data received')
         });
-    }
+    }, []);
 
-    async componentDidMount() {
-        await this.setCharacters();
-    }
 
-    render() {
-        const { classes } = this.props;
+    if (characters.length > 0) {
         return (
             <div>
                 <h1>Characters</h1>
                 <div>
-                    <ul>
-                        {
-                            this.state.characters.map(
-                                (character: Character) =>
-                                    <Card key={character.name} className={classes.root}>
-                                        <CardHeader title={character.name}/>
-                                        <img src=
-                                                 {process.env.PUBLIC_URL + "/pics/" +
-                                                 (this.pics.find(pic => pic.name === character.name)?.fileName) + ".png"}
-                                             alt={character.name}
-                                             width="200" height="180"/>
-                                    </Card>
-                            )
-                        }
-                    </ul>
+                    { characters.map((character: Characterizable, index) =>
+                        <Character character={character} key={index}/>) }
                 </div>
             </div>
         );
     }
+
+    return (
+        <div><h2>Loading...</h2></div>
+    )
 }

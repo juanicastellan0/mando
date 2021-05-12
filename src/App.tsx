@@ -1,39 +1,36 @@
 import React from 'react';
-import CharactersList from "./components/CharactersList";
+import CharacterShow from "./components/CharacterShow";
+import CharactersList from "./components/CharactersList"
 import './App.css';
 import {
     BrowserRouter as Router,
+    Link,
     Switch,
     Route
 } from "react-router-dom"
-import {Link, Breadcrumbs, Container, CssBaseline, Typography} from "@material-ui/core";
-import {MuiThemeProvider} from "@material-ui/core";
-import theme from "./themeConfig";
 
 function App() {
     return (
         <Router>
             <React.Fragment>
-                <MuiThemeProvider theme={theme}>
-                    <CssBaseline/>
-                    <Container maxWidth="sm">
-                        <Typography component="div"/>
                         <div>
-                            <Breadcrumbs>
-                                <Link color="primary" href="/">Home</Link>
-                                <Link color="primary" href="/characters">Characters</Link>
-                            </Breadcrumbs>
+                            <div className='links'>
+                                <Link to="/">Home</Link>
+                                <br/>
+                                <Link to="/characters">Characters</Link>
+                            </div>
                             <Switch>
                                 <Route path="/characters">
-                                    <Characters/>
+                                    <CharactersList/>
+                                </Route>
+                                <Route path="/characters/:characterId">
+                                    <CharacterShow/>
                                 </Route>
                                 <Route path="/">
                                     <Home/>
                                 </Route>
                             </Switch>
                         </div>
-                    </Container>
-                </MuiThemeProvider>
             </React.Fragment>
         </Router>
     );
@@ -50,10 +47,6 @@ function Home() {
             />
         </div>
     );
-}
-
-function Characters() {
-    return <CharactersList/>;
 }
 
 export default App;
